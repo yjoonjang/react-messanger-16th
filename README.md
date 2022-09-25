@@ -19,7 +19,9 @@
 - TypeScript를 사용해봅니다.
 - useState로 컴포넌트의 상태를 관리합니다.
 - useEffect와 useRef의 사용법을 이해합니다.
-- styled-components를 통한 CSS-in-JS 및 CSS Preprocessor의 사용법에 익숙해집니다.
+- Custom hooks를 통해 중복되는 로직을 줄이기
+- Styled-components에서 props 사용해보기
+- (선택) Redux, Context API등 Flux 패턴 적용해보기
 
 ## 기한
 
@@ -45,3 +47,4 @@
 - [코딩 컨벤션](https://ui.toast.com/fe-guide/ko_CODING-CONVENTION)
 - [타입스크립트 핸드북](https://joshua1988.github.io/ts/intro.html)
 - [리액트 프로젝트에서 타입스크립트 사용하기 (시리즈)](https://velog.io/@velopert/series/react-with-typescript)
+- [Flux 패턴이란](https://velog.io/@huurray/React%EC%9D%98-%ED%83%84%EC%83%9D%EA%B3%BC-Flux-%ED%8C%A8%ED%84%B4%EC%97%90-%EB%8C%80%ED%95%98%EC%97%AC)
