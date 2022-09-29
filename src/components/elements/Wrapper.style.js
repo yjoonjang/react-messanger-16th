@@ -1,7 +1,10 @@
 import styled from 'styled-components';
 
-export const Row = styled.div`
+export const Row = styled.div.attrs((props) => ({
+  gap: props.gap,
+}))`
   display: flex;
+  gap: ${(props) => props.gap};
 `;
 
 export const Column = styled.div.attrs((props) => ({

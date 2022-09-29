@@ -21,10 +21,6 @@ const UserThumbnail = styled.div<{ isSelected: boolean }>`
   cursor: pointer;
 `;
 
-const Username = styled.div`
-  font-size: 11px;
-`;
-
 const User = ({ onClick, imageSrc, username, isSelected }: IUser) => {
   return (
     <UserThumbnail onClick={onClick} isSelected={isSelected}>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Container, MessangerBox, Header, TextShowArea, InputTextArea } from './MessangerPage.styled';
 import User from '../elements/User';
 import { Column } from '../elements/Wrapper.style';
+import Message from '../elements/Message';
 
 // TODO: 유저 프로필 이미지 선택 시 유저 이름 변경 + 메세지 띄우기
 
@@ -83,7 +84,15 @@ const MessangerPage = () => {
             <span style={{ fontSize: '12px' }}>박명수</span>
           </Column>
         </Header>
-        <TextShowArea>d</TextShowArea>
+        <TextShowArea>
+          {messageList.map((messageInfo) =>
+            messageInfo.username === '장영준' ? (
+              <Message username="장영준" text={messageInfo.text} time={messageInfo.messageTime} />
+            ) : (
+              <Message username="박명수" text={messageInfo.text} time={messageInfo.messageTime} />
+            )
+          )}
+        </TextShowArea>
         <InputTextArea>
           <input onKeyPress={onEnterKeyPress} onChange={(e) => onHandleInputText(e)} />
           <button>전송</button>
