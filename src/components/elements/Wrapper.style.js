@@ -2,9 +2,15 @@ import styled from 'styled-components';
 
 export const Row = styled.div.attrs((props) => ({
   gap: props.gap,
+  alignItems: props.alignItems,
+  justifyContent: props.justifyContent,
+  marginBottom: props.marginBottom,
 }))`
   display: flex;
+  justify-content: ${(props) => props.justifyContent};
+  align-items: ${(props) => props.alignItems};
   gap: ${(props) => props.gap};
+  margin-bottom: ${(props) => props.marginBottom};
 `;
 
 export const Column = styled.div.attrs((props) => ({

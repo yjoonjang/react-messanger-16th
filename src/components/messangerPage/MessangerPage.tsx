@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Container, MessangerBox, Header, TextShowArea, InputTextArea } from './MessangerPage.styled';
 import User from '../elements/User';
 import { Column } from '../elements/Wrapper.style';
 import Message from '../elements/Message';
+import { MessageListJSON } from '../elements/Json';
 
 // TODO: 유저 프로필 이미지 선택 시 유저 이름 변경 + 메세지 띄우기
 
@@ -10,39 +11,26 @@ interface IMessageList {
   username: string;
   messageTime?: string;
   text?: string;
+  marginBottom?: string;
 }
 
 const MessangerPage = () => {
   const [username, setUsername] = useState<string>('장영준');
   const [text, setText] = useState('');
   const [isButtonActive, setIsButtonActive] = useState<boolean>(false);
-  const [messageList, setMessageList] = useState<IMessageList[]>([
-    {
-      username: '박명수',
-      messageTime: `5월 5일`,
-      text: '인천이',
-    },
-    {
-      username: '박명수',
-      messageTime: `5월 5일`,
-      text: '천안보다 좋다',
-    },
-    {
-      username: '장영준',
-      messageTime: `5월 5일`,
-      text: '천안분들 어떡해',
-    },
-    {
-      username: '장영준',
-      messageTime: `5월 5일`,
-      text: '천안분들 닌리나게...',
-    },
-    {
-      username: '박명수',
-      messageTime: `5월 5일`,
-      text: '다시 가!',
-    },
-  ]);
+  const [messageList, setMessageList] = useState<IMessageList[]>(MessageListJSON);
+  const divRef = useRef<HTMLUListElement>(null);
+
+  const scrollToBottom = () => {
+    if (divRef.current) {
+      divRef.current.scrollTop = divRef.current.scrollHeight;
+      console.log('hi');
+    }
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messageList]);
 
   const onHandleInputText = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {
@@ -64,6 +52,7 @@ const MessangerPage = () => {
         },
       ];
       setMessageList(tempList);
+      setText('');
     }
   };
 
@@ -87,14 +76,28 @@ const MessangerPage = () => {
         <TextShowArea>
           {messageList.map((messageInfo) =>
             messageInfo.username === '장영준' ? (
-              <Message username="장영준" text={messageInfo.text} time={messageInfo.messageTime} />
+              <Message
+                key={messageInfo.text}
+                username="장영준"
+                text={messageInfo.text}
+                time={messageInfo.messageTime}
+                marginBottom="8px"
+                ref={divRef}
+              />
             ) : (
-              <Message username="박명수" text={messageInfo.text} time={messageInfo.messageTime} />
+              <Message
+                key={messageInfo.text}
+                username="박명수"
+                text={messageInfo.text}
+                time={messageInfo.messageTime}
+                marginBottom="8px"
+                ref={divRef}
+              />
             )
           )}
         </TextShowArea>
         <InputTextArea>
-          <input onKeyPress={onEnterKeyPress} onChange={(e) => onHandleInputText(e)} />
+          <input onKeyPress={onEnterKeyPress} onChange={(e) => onHandleInputText(e)} value={text} />
           <button>전송</button>
         </InputTextArea>
       </MessangerBox>

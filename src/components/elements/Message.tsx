@@ -7,11 +7,14 @@ interface IMessage {
   username: string;
   text: string | undefined;
   time: string | undefined;
+  marginBottom?: string;
+  ref?: any;
 }
 
 const TextArea = styled.div`
-  padding: 12px 4px;
-  background-color: gray;
+  padding: 4px 8px;
+  background-color: #efefef;
+  border-radius: 10px;
 `;
 
 const UserThumbnail = styled.div`
@@ -25,20 +28,22 @@ const UserThumbnail = styled.div`
   background-color: black;
 `;
 
-const Message = ({ imageSrc, username, text, time }: IMessage) => {
+const Message = ({ imageSrc, username, text, time, marginBottom, ref }: IMessage) => {
   return (
-    <Row gap="4px">
-      <UserThumbnail>
-        <img src={imageSrc} alt="프로필 사진" id={username} />
-      </UserThumbnail>
-      <Column>
-        <span>{username}</span>
-        <Row>
-          <TextArea>{text}</TextArea>
-          <span>{time}</span>
-        </Row>
-      </Column>
-    </Row>
+    <div ref={ref}>
+      <Row gap="4px" marginBottom={marginBottom}>
+        <UserThumbnail>
+          <img src={imageSrc} alt="프로필 사진" id={username} />
+        </UserThumbnail>
+        <Column gap="3px" justifyContent="center">
+          <span style={{ fontSize: '4px' }}>{username}</span>
+          <Row alignItems="end" gap="8px">
+            <TextArea>{text}</TextArea>
+            <span style={{ fontSize: '12px' }}>{time}</span>
+          </Row>
+        </Column>
+      </Row>
+    </div>
   );
 };
 

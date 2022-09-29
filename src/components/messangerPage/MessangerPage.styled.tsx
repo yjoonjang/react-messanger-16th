@@ -33,6 +33,7 @@ export const TextShowArea = styled.div`
   height: 65%;
   background-color: #ff5a0080;
   padding: 20px;
+  overflow-y: scroll;
 `;
 
 export const InputTextArea = styled.div`
