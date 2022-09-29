@@ -1,5 +1,11 @@
+import MessangerPage from './components/messangerPage/MessangerPage';
+
 function App() {
-  return <div>화이팅!!</div>;
+  return (
+    <>
+      <MessangerPage />
+    </>
+  );
 }
 
 export default App;
