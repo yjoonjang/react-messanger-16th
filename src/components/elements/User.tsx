@@ -1,18 +1,22 @@
 import styled from 'styled-components';
-import { Column } from './Wrapper.style';
 
 interface IUser {
   imageSrc?: string;
-  onClick?: Function;
+  onClick?: (e: any) => any;
   username: string;
+  isSelected: boolean;
 }
 
-const UserThumbnail = styled.div`
+const UserThumbnail = styled.div<{ isSelected: boolean }>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 48px;
   height: 48px;
   border-radius: 50%;
   overflow: hidden;
-  border: 2px solid red;
+  /* border: 2px solid red; */
+  background-color: ${(props) => (props.isSelected ? '#242424' : 'transparent')};
 
   cursor: pointer;
 `;
@@ -21,14 +25,11 @@ const Username = styled.div`
   font-size: 11px;
 `;
 
-const User = ({ onClick, imageSrc, username }: IUser) => {
+const User = ({ onClick, imageSrc, username, isSelected }: IUser) => {
   return (
-    <Column alignItems="center" gap="4px">
-      <UserThumbnail>
-        <img src={imageSrc} alt="프로필 사진" />
-      </UserThumbnail>
-      <Username>{username}</Username>
-    </Column>
+    <UserThumbnail onClick={onClick} isSelected={isSelected}>
+      <img src={imageSrc} alt="프로필 사진" id={username} />
+    </UserThumbnail>
   );
 };
 

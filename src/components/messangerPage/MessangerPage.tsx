@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Container, MessangerBox, Header, TextShowArea, InputTextArea } from './MessangerPage.styled';
 import User from '../elements/User';
-import { url } from 'inspector';
+import { Column } from '../elements/Wrapper.style';
 
-interface IUser {
-  name: string;
-}
+// TODO: 유저 프로필 이미지 선택 시 유저 이름 변경 + 메세지 띄우기
 
 interface IMessageList {
   username: string;
@@ -13,12 +11,10 @@ interface IMessageList {
   text?: string;
 }
 
-/*
-messageList의 구성을 time : {name: name, message: message} 이런식으로 구현해야 하는 건가 ?
-*/
-
 const MessangerPage = () => {
-  const [username, setUsername] = useState<IUser>({ name: '장영준' });
+  const [username, setUsername] = useState<string>('장영준');
+  const [text, setText] = useState('');
+  const [isButtonActive, setIsButtonActive] = useState<boolean>(false);
   const [messageList, setMessageList] = useState<IMessageList[]>([
     {
       username: '박명수',
@@ -46,8 +42,6 @@ const MessangerPage = () => {
       text: '다시 가!',
     },
   ]);
-  const [text, setText] = useState('');
-  const [isButtonActive, setIsButtonActive] = useState(false);
 
   const onHandleInputText = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {
@@ -63,7 +57,7 @@ const MessangerPage = () => {
       tempList = [
         ...tempList,
         {
-          username: username.name,
+          username: username,
           messageTime: time,
           text: text,
         },
@@ -73,21 +67,25 @@ const MessangerPage = () => {
   };
 
   const onClickProfileImage = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const {
-      currentTarget: { value },
-    } = e;
+    setUsername(e.currentTarget.children[0].id);
   };
 
   return (
     <Container>
       <MessangerBox>
         <Header>
-          <User username="징영준" />
-          <User username="박명수" onClick={onClickProfileImage} />
+          <Column alignItems="center" gap="4px">
+            <User username="장영준" onClick={(e: any) => onClickProfileImage(e)} isSelected={username === '장영준'} />
+            <span style={{ fontSize: '12px' }}>장영준</span>
+          </Column>
+          <Column alignItems="center" gap="4px">
+            <User username="박명수" onClick={(e: any) => onClickProfileImage(e)} isSelected={username === '박명수'} />
+            <span style={{ fontSize: '12px' }}>박명수</span>
+          </Column>
         </Header>
         <TextShowArea>d</TextShowArea>
         <InputTextArea>
-          <input id={text} onKeyPress={onEnterKeyPress} onChange={(e) => onHandleInputText(e)} value={text} />
+          <input onKeyPress={onEnterKeyPress} onChange={(e) => onHandleInputText(e)} />
           <button>전송</button>
         </InputTextArea>
       </MessangerBox>
