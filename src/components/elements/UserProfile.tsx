@@ -21,7 +21,7 @@ const UserThumbnail = styled.div<{ isSelected: boolean }>`
   cursor: pointer;
 `;
 
-const User = ({ onClick, imageSrc, username, isSelected }: IUser) => {
+const UserProfile = ({ onClick, imageSrc, username, isSelected }: IUser) => {
   return (
     <UserThumbnail onClick={onClick} isSelected={isSelected}>
       <img src={imageSrc} alt="프로필 사진" id={username} />
@@ -29,4 +29,4 @@ const User = ({ onClick, imageSrc, username, isSelected }: IUser) => {
   );
 };
 
-export default User;
+export default UserProfile;

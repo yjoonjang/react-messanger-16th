@@ -1,9 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Container, MessangerBox, Header, TextShowArea, InputTextArea } from './MessangerPage.styled';
-import User from '../elements/User';
+import UserProfile from '../elements/UserProfile';
 import { Column } from '../elements/Wrapper.style';
-import Message from '../elements/Message';
+import UserMessage from '../elements/UserMessage';
 import { MessageListJSON } from '../elements/Json';
+import { useRecoilState } from 'recoil';
+import { userState } from '../../state/userState';
 
 // TODO: 유저 프로필 이미지 선택 시 유저 이름 변경 + 메세지 띄우기
 
@@ -15,11 +17,11 @@ interface IMessageList {
 }
 
 const MessangerPage = () => {
-  const [username, setUsername] = useState<string>('장영준');
-  const [text, setText] = useState('');
+  const [username, setUsername] = useRecoilState(userState);
+  const [text, setText] = useState<string>('');
   const [isButtonActive, setIsButtonActive] = useState<boolean>(false);
   const [messageList, setMessageList] = useState<IMessageList[]>(MessageListJSON);
-  const divRef = useRef<HTMLUListElement>(null);
+  const divRef = useRef<HTMLInputElement>(null);
 
   const scrollToBottom = () => {
     if (divRef.current) {
@@ -65,34 +67,46 @@ const MessangerPage = () => {
       <MessangerBox>
         <Header>
           <Column alignItems="center" gap="4px">
-            <User username="장영준" onClick={(e: any) => onClickProfileImage(e)} isSelected={username === '장영준'} />
+            <UserProfile
+              username="장영준"
+              onClick={(e: any) => onClickProfileImage(e)}
+              isSelected={username === '장영준'}
+            />
             <span style={{ fontSize: '12px' }}>장영준</span>
           </Column>
           <Column alignItems="center" gap="4px">
-            <User username="박명수" onClick={(e: any) => onClickProfileImage(e)} isSelected={username === '박명수'} />
+            <UserProfile
+              username="박명수"
+              onClick={(e: any) => onClickProfileImage(e)}
+              isSelected={username === '박명수'}
+            />
             <span style={{ fontSize: '12px' }}>박명수</span>
           </Column>
         </Header>
         <TextShowArea>
           {messageList.map((messageInfo) =>
-            messageInfo.username === '장영준' ? (
-              <Message
-                key={messageInfo.text}
-                username="장영준"
-                text={messageInfo.text}
-                time={messageInfo.messageTime}
-                marginBottom="8px"
-                ref={divRef}
-              />
+            username === '장영준' ? (
+              messageInfo.username === '장영준' ? (
+                <UserMessage
+                  key={messageInfo.text}
+                  username={messageInfo.username}
+                  text={messageInfo.text}
+                  time={messageInfo.messageTime}
+                  marginBottom="8px"
+                  // ref={divRef}
+                />
+              ) : (
+                <UserMessage
+                  key={messageInfo.text}
+                  username="박명수"
+                  text={messageInfo.text}
+                  time={messageInfo.messageTime}
+                  marginBottom="8px"
+                  // ref={divRef}
+                />
+              )
             ) : (
-              <Message
-                key={messageInfo.text}
-                username="박명수"
-                text={messageInfo.text}
-                time={messageInfo.messageTime}
-                marginBottom="8px"
-                ref={divRef}
-              />
+              <></>
             )
           )}
         </TextShowArea>
