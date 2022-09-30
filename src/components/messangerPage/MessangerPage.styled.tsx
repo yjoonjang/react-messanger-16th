@@ -29,14 +29,24 @@ export const Header = styled.header`
 `;
 
 export const TextShowArea = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 100%;
   height: 65%;
   background-color: #ff5a0080;
   padding: 20px;
   overflow-y: scroll;
+
+  & .opponent-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
 `;
 
-export const InputTextArea = styled.div`
+export const InputTextArea = styled.div.attrs<{ isButtonActive: boolean }>((props) => ({
+  isButtonActive: props.isButtonActive,
+}))`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -59,6 +69,10 @@ export const InputTextArea = styled.div`
     height: 100%;
     width: 25%;
     padding: 10px;
-    background-color: yellow;
+    background-color: #f9e000;
+
+    &:disabled {
+      background-color: #ffe68e;
+    }
   }
 `;

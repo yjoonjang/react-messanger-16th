@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, DetailedHTMLProps } from 'react';
 import { Container, MessangerBox, Header, TextShowArea, InputTextArea } from './MessangerPage.styled';
 import UserProfile from '../elements/UserProfile';
 import { Column } from '../elements/Wrapper.style';
@@ -6,6 +6,7 @@ import UserMessage from '../elements/UserMessage';
 import { MessageListJSON } from '../elements/Json';
 import { useRecoilState } from 'recoil';
 import { userState } from '../../state/userState';
+// import { IUserState } from '../../state/userState';
 
 // TODO: 유저 프로필 이미지 선택 시 유저 이름 변경 + 메세지 띄우기
 
@@ -16,17 +17,21 @@ interface IMessageList {
   marginBottom?: string;
 }
 
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  title: string;
+  showIcon: boolean;
+}
+
 const MessangerPage = () => {
-  const [username, setUsername] = useRecoilState<string>(userState);
+  const [username, setUsername] = useRecoilState(userState);
   const [text, setText] = useState<string>('');
   const [isButtonActive, setIsButtonActive] = useState<boolean>(false);
   const [messageList, setMessageList] = useState<IMessageList[]>(MessageListJSON);
-  const divRef = useRef<HTMLInputElement>(null);
+  const divRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
     if (divRef.current) {
       divRef.current.scrollTop = divRef.current.scrollHeight;
-      console.log('hi');
     }
   };
 
@@ -38,7 +43,26 @@ const MessangerPage = () => {
     const {
       currentTarget: { value },
     } = e;
-    setText(value);
+    if (value) {
+      setIsButtonActive(true);
+      setText(value);
+    }
+  };
+
+  const onSendButtonClick = () => {
+    let time = `${new Date().getHours()} : ${new Date().getMinutes()}`;
+    let tempList = messageList;
+    tempList = [
+      ...tempList,
+      {
+        username: username,
+        messageTime: time,
+        text: text,
+      },
+    ];
+    setMessageList(tempList);
+    setText('');
+    setIsButtonActive(false);
   };
 
   const onEnterKeyPress = (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -55,6 +79,7 @@ const MessangerPage = () => {
       ];
       setMessageList(tempList);
       setText('');
+      setIsButtonActive(false);
     }
   };
 
@@ -76,43 +101,59 @@ const MessangerPage = () => {
           </Column>
           <Column alignItems="center" gap="4px">
             <UserProfile
-              username="박명수"
+              username="백짱"
               onClick={(e: any) => onClickProfileImage(e)}
-              isSelected={username === '박명수'}
+              isSelected={username === '백짱'}
             />
-            <span style={{ fontSize: '12px' }}>박명수</span>
+            <span style={{ fontSize: '12px' }}>백짱 </span>
           </Column>
         </Header>
-        <TextShowArea>
+        <TextShowArea ref={divRef}>
           {messageList.map((messageInfo) =>
             username === '장영준' ? (
-              messageInfo.username === '장영준' ? (
+              messageInfo.username !== '장영준' ? (
                 <UserMessage
                   key={messageInfo.text}
                   username={messageInfo.username}
                   text={messageInfo.text}
                   time={messageInfo.messageTime}
                   marginBottom="8px"
-                  // ref={divRef}
                 />
               ) : (
                 <UserMessage
                   key={messageInfo.text}
-                  username="박명수"
+                  username={messageInfo.username}
+                  className="opponent-text"
                   text={messageInfo.text}
                   time={messageInfo.messageTime}
                   marginBottom="8px"
-                  // ref={divRef}
                 />
               )
+            ) : messageInfo.username === '장영준' ? (
+              <UserMessage
+                key={messageInfo.text}
+                username={messageInfo.username}
+                text={messageInfo.text}
+                time={messageInfo.messageTime}
+                marginBottom="8px"
+              />
             ) : (
-              <></>
+              <UserMessage
+                key={messageInfo.text}
+                username={messageInfo.username}
+                className="opponent-text"
+                text={messageInfo.text}
+                time={messageInfo.messageTime}
+                marginBottom="8px"
+              />
             )
           )}
         </TextShowArea>
         <InputTextArea>
           <input onKeyPress={onEnterKeyPress} onChange={(e) => onHandleInputText(e)} value={text} />
-          <button>전송</button>
+          <button onClick={onSendButtonClick} disabled={!isButtonActive}>
+            전송
+          </button>
         </InputTextArea>
       </MessangerBox>
     </Container>

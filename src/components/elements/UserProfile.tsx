@@ -19,12 +19,16 @@ const UserThumbnail = styled.div<{ isSelected: boolean }>`
   background-color: ${(props) => (props.isSelected ? '#242424' : 'transparent')};
 
   cursor: pointer;
+
+  img {
+    background-color: pink;
+  }
 `;
 
 const UserProfile = ({ onClick, imageSrc, username, isSelected }: IUser) => {
   return (
     <UserThumbnail onClick={onClick} isSelected={isSelected}>
-      <img src={imageSrc} alt="프로필 사진" id={username} />
+      <img src={imageSrc} alt="" id={username} />
     </UserThumbnail>
   );
 };
