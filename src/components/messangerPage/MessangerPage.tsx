@@ -17,7 +17,7 @@ interface IMessageList {
 }
 
 const MessangerPage = () => {
-  const [username, setUsername] = useRecoilState(userState);
+  const [username, setUsername] = useRecoilState<string>(userState);
   const [text, setText] = useState<string>('');
   const [isButtonActive, setIsButtonActive] = useState<boolean>(false);
   const [messageList, setMessageList] = useState<IMessageList[]>(MessageListJSON);
