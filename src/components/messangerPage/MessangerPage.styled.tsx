@@ -24,7 +24,6 @@ export const Header = styled.header`
   gap: 12px;
   width: 100%;
   height: 15%;
-  /* background-color: aqua; */
   padding: 20px;
 `;
 
@@ -52,7 +51,6 @@ export const InputTextArea = styled.div.attrs<{ isButtonActive: boolean }>((prop
   align-items: center;
   width: 100%;
   height: 20%;
-  /* background-color: blue; */
   padding: 12px;
   gap: 20px;
 
@@ -60,7 +58,6 @@ export const InputTextArea = styled.div.attrs<{ isButtonActive: boolean }>((prop
     width: 70%;
     height: 100%;
     border: none;
-    /* background-color: red; */
     padding-left: 12px;
     vertical-align: top;
   }

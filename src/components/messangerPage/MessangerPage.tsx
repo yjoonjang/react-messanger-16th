@@ -3,7 +3,7 @@ import { Container, MessangerBox, Header, TextShowArea, InputTextArea } from './
 import UserProfile from '../elements/UserProfile';
 import { Column } from '../elements/Wrapper.style';
 import UserMessage from '../elements/UserMessage';
-import { MessageListJSON } from '../elements/Json';
+import MessageList from '../elements/MessageList.json';
 import { useRecoilState } from 'recoil';
 import { userState } from '../../state/userState';
 // import { IUserState } from '../../state/userState';
@@ -26,8 +26,10 @@ const MessangerPage = () => {
   const [username, setUsername] = useRecoilState(userState);
   const [text, setText] = useState<string>('');
   const [isButtonActive, setIsButtonActive] = useState<boolean>(false);
-  const [messageList, setMessageList] = useState<IMessageList[]>(MessageListJSON);
+  const [messageList, setMessageList] = useState<IMessageList[]>(MessageList.MessageList);
   const divRef = useRef<HTMLDivElement>(null);
+
+  // console.log(message);
 
   const scrollToBottom = () => {
     if (divRef.current) {
@@ -45,8 +47,8 @@ const MessangerPage = () => {
     } = e;
     if (value) {
       setIsButtonActive(true);
-      setText(value);
     }
+    setText(value);
   };
 
   const onSendButtonClick = () => {
