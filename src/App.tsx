@@ -1,9 +1,11 @@
-import MessangerPage from './components/messangerPage/MessangerPage';
+// import MessangerPage from './components/messangerPage/MessangerPage';
+import HomePage from './components/HomePage/homePage';
 
 function App() {
   return (
     <>
-      <MessangerPage />
+      <HomePage />
+      {/* <MessangerPage /> */}
     </>
   );
 }

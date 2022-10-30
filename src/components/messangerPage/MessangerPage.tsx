@@ -17,19 +17,12 @@ interface IMessageList {
   marginBottom?: string;
 }
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  title: string;
-  showIcon: boolean;
-}
-
 const MessangerPage = () => {
   const [username, setUsername] = useRecoilState(userState);
   const [text, setText] = useState<string>('');
   const [isButtonActive, setIsButtonActive] = useState<boolean>(false);
   const [messageList, setMessageList] = useState<IMessageList[]>(MessageList.MessageList);
   const divRef = useRef<HTMLDivElement>(null);
-
-  // console.log(message);
 
   const scrollToBottom = () => {
     if (divRef.current) {

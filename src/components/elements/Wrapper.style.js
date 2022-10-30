@@ -1,12 +1,14 @@
 import styled from 'styled-components';
 
 export const Row = styled.div.attrs((props) => ({
+  width: props.width,
   gap: props.gap,
   alignItems: props.alignItems,
   justifyContent: props.justifyContent,
   marginBottom: props.marginBottom,
 }))`
   display: flex;
+  width: ${(props) => props.width};
   justify-content: ${(props) => props.justifyContent};
   align-items: ${(props) => props.alignItems};
   gap: ${(props) => props.gap};

@@ -31,8 +31,7 @@ const UserThumbnail = styled.div`
   background-color: black;
 `;
 
-const UserMessage = ({ className, imageSrc, username, text, time, marginBottom, ref }: IMessage) => {
-  // const UserMessage = forwardRef<HTMLUListElement, IMessage>((props, ref) => {
+const UserMessage = ({ className, imageSrc, username, text, time, marginBottom }: IMessage) => {
   const selectedUsername = useRecoilValue(userState);
 
   return (
