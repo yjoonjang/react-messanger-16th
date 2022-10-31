@@ -28,7 +28,7 @@ export const NavigationBar = styled.div`
 `;
 
 export const FriendContainer = styled.div`
-  width: 100%;
+  /* width: 100%; */
   display: flex;
   flex-direction: column;
   padding: 20px 24px;
