@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Row, Column } from '../../elements/Wrapper.style';
+import { Row, Column } from './Wrapper.style';
 
 interface userBarProps {
   username: string;
@@ -11,7 +11,9 @@ const UserBar = ({ username, introduction, imageSrc }: userBarProps) => {
   return (
     <Wrapper>
       <Row gap="12px">
-        <ImageThumbnail />
+        <ImageThumbnail>
+          <img src={imageSrc} />
+        </ImageThumbnail>
         <Column style={{ fontWeight: '500' }}>
           <span style={{ fontSize: '16px' }}>{username}</span>
           <span style={{ fontSize: '12px', color: '#7b7878' }}>{introduction}</span>
@@ -26,13 +28,11 @@ export default UserBar;
 const Wrapper = styled.button`
   width: 100%;
   height: 70px;
-  /* background-color: red; */
   display: flex;
   align-items: center;
 
   &:hover {
-    width: 200%;
-    overflow-x: visible;
+    width: 1000%;
     background-color: #f1f0f0;
   }
 `;
