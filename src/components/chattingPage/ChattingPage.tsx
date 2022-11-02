@@ -5,6 +5,8 @@ import { userListState } from '../../state/userState';
 
 const ChattingPage = () => {
   const userList = useRecoilValue(userListState);
+  // console.log(userList[0].messageList[userList[0].messageList.length - 1]);
+
   return (
     <>
       <Row width="100%" justifyContent="space-between" alignItems="start">
@@ -12,9 +14,15 @@ const ChattingPage = () => {
       </Row>
       <Column>
         <>
-          {/* {userList.map((user, index) => {
-            return <UserBar key={index} username={user.username} introduction={user.introduction} />;
-          })} */}
+          {userList.map((user, index) => {
+            if (user.messageList) {
+              const messageListLength = user.messageList?.length;
+              const lastMessage = user.messageList[messageListLength - 1];
+
+              return <UserBar key={index} username={user.username} introduction={lastMessage.text} />;
+            }
+            return;
+          })}
         </>
       </Column>
     </>

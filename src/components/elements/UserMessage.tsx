@@ -1,4 +1,3 @@
-import React, { forwardRef, Ref } from 'react';
 import styled from 'styled-components';
 import { Row, Column } from './Wrapper.style';
 import { useRecoilValue } from 'recoil';
