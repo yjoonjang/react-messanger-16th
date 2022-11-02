@@ -4,12 +4,14 @@ import { Row, Column } from './Wrapper.style';
 interface userBarProps {
   username: string;
   introduction: string;
+  value?: string;
   imageSrc?: string;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-const UserBar = ({ username, introduction, imageSrc }: userBarProps) => {
+const UserBar = ({ username, introduction, imageSrc, onClick, value }: userBarProps) => {
   return (
-    <Wrapper>
+    <Wrapper onClick={onClick} value={value}>
       <Row gap="12px">
         <ImageThumbnail>
           <img src={imageSrc} />
