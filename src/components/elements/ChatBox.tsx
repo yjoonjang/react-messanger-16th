@@ -2,22 +2,24 @@ import styled from 'styled-components';
 import { Row, Column } from './Wrapper.style';
 
 interface chatBoxProps {
-  className: string;
-  marginBottom: string;
+  className?: string;
+  marginBottom?: string;
   imageSrc?: string;
   time: string;
   content: string;
   chatOwner: string;
-  chattingTarget: string;
+  // chattingTarget: string;
   selectedUser: string;
 }
 
-const chatBox = ({ className, marginBottom, imageSrc, time, content, chatOwner, selectedUser }: chatBoxProps) => {
+const ChatBox = ({ className, marginBottom, imageSrc, time, content, chatOwner, selectedUser }: chatBoxProps) => {
+  console.log('hi');
+
   return (
     <>
       {selectedUser !== chatOwner ? (
         <div className={className}>
-          <Row gap="4px" marginBottom={marginBottom}>
+          <Row gap="4px" marginBottom="8px">
             <UserThumbnail>
               <img src={imageSrc} alt="프로필 사진" id={chatOwner} />
             </UserThumbnail>
@@ -50,7 +52,7 @@ const chatBox = ({ className, marginBottom, imageSrc, time, content, chatOwner, 
   );
 };
 
-export default chatBox;
+export default ChatBox;
 
 /*
 로그인된 유저

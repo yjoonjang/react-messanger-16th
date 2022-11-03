@@ -1,73 +1,73 @@
 {
-  "chat1": [
+  "1": [
     {
       "username": "프짱",
       "messageTime": "12월 14일",
-      "text": "프론트가"
+      "content": "프론트가"
     },
     {
       "username": "프짱",
       "messageTime": "12월 14일",
-      "text": "미래다!"
+      "content": "미래다!"
     },
     {
       "username": "장영준",
       "messageTime": "12월 14일",
-      "text": "맞지"
+      "content": "맞지"
     }
   ],
 
-  "chat2": [
+  "2": [
     {
       "username": "백짱",
       "messageTime": "12월 14일",
-      "text": "백엔드가"
+      "content": "백엔드가"
     },
     {
       "username": "백짱",
       "messageTime": "12월 14일",
-      "text": "미래다!"
+      "content": "미래다!"
     },
     {
       "username": "장영준",
       "messageTime": "12월 14일",
-      "text": "그건 좀 .."
+      "content": "그건 좀 .."
     }
   ],
 
-  "chat3": [
+  "3": [
     {
       "username": "기획짱",
       "messageTime": "12월 14일",
-      "text": "기획이"
+      "content": "기획이"
     },
     {
       "username": "백짱",
       "messageTime": "12월 14일",
-      "text": "미래다!"
+      "content": "미래다!"
     },
     {
       "username": "장영준",
       "messageTime": "12월 14일",
-      "text": "음 .."
+      "content": "음 .."
     }
   ],
 
-  "chat4": [
+  "4": [
     {
       "username": "디자인짱",
       "messageTime": "12월 14일",
-      "text": "디자인이"
+      "content": "디자인이"
     },
     {
       "username": "디자인짱",
       "messageTime": "12월 14일",
-      "text": "미래다!"
+      "content": "미래다!"
     },
     {
       "username": "장영준",
       "messageTime": "12월 14일",
-      "text": "ㅋㅋ"
+      "content": "ㅋㅋ"
     }
   ]
 }

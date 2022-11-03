@@ -1,10 +1,11 @@
 import { Row, Column } from '../elements/Wrapper.style';
 import UserBar from '../elements/UserBar';
 import { useRecoilValue } from 'recoil';
-import { userInfoState } from '../../state/userState';
+import { userState } from '../../state/userState';
+// import { userInfoState } from '../../state/userState';
 
 const ProfilePage = () => {
-  const userList = useRecoilValue(userInfoState);
+  const userList = useRecoilValue(userState);
   return (
     <>
       <Row width="100%" justifyContent="space-between" alignItems="start">
@@ -13,8 +14,8 @@ const ProfilePage = () => {
       </Row>
       <Column>
         <>
-          {userList.map((user, index) => {
-            return <UserBar key={index} username={user.username} introduction={user.introduction} />;
+          {userList.map((user) => {
+            return <UserBar key={user.userId} username={user.username} statusMessage={user.introMessage} />;
           })}
         </>
       </Column>

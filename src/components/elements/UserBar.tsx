@@ -4,15 +4,15 @@ import { Row, Column } from './Wrapper.style';
 interface userBarProps {
   username: string;
   date?: string;
-  introduction: string;
-  value?: string;
+  statusMessage?: string;
+  userId?: number;
   imageSrc?: string;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-const UserBar = ({ username, date, introduction, imageSrc, onClick, value }: userBarProps) => {
+const UserBar = ({ username, date, statusMessage: introduction, imageSrc, onClick, userId }: userBarProps) => {
   return (
-    <Wrapper onClick={onClick} value={value}>
+    <Wrapper onClick={onClick} value={userId}>
       <Row width="100%" gap="12px">
         <ImageThumbnail>
           <img src={imageSrc} />

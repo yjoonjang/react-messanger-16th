@@ -20,11 +20,7 @@ const HomePage = () => {
       <Wrapper>
         <NavigationBar>
           <ProfileIcon name="profile" isSelected={selectedContent === 'profile'} onClickIcon={onClickIcon} />
-          <MessageIcon
-            name="messageRoomList"
-            isSelected={selectedContent === 'messageRoomList'}
-            onClickIcon={onClickIcon}
-          />
+          <MessageIcon name="chattingList" isSelected={selectedContent === 'chattingList'} onClickIcon={onClickIcon} />
           <SettingIcon name="setting" isSelected={selectedContent === 'setting'} onClickIcon={onClickIcon} />
         </NavigationBar>
         <FriendContainer>
