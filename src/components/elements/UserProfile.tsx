@@ -15,7 +15,6 @@ const UserThumbnail = styled.div<{ isSelected: boolean }>`
   height: 48px;
   border-radius: 50%;
   overflow: hidden;
-  /* border: 2px solid red; */
   background-color: ${(props) => (props.isSelected ? '#242424' : 'transparent')};
 
   cursor: pointer;

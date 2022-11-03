@@ -1,12 +1,11 @@
-import React, { useEffect, useState, useRef, DetailedHTMLProps } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { useLocation } from 'react-router';
 import { Container, MessangerBox, Header, TextShowArea, InputTextArea } from './MessangerPage.styled';
 import UserProfile from '../elements/UserProfile';
 import { Column } from '../elements/Wrapper.style';
-import UserMessage from '../elements/UserMessage';
-import MessageList from '../elements/MessageList.json';
 import { useRecoilState } from 'recoil';
-import { userState } from '../../state/userState';
-// import { IUserState } from '../../state/userState';
+import { IUserInfo, userInfoState } from '../../state/userState';
+import chatBox from '../elements/ChatBox';
 
 // TODO: 유저 프로필 이미지 선택 시 유저 이름 변경 + 메세지 띄우기
 
@@ -14,15 +13,23 @@ interface IMessageList {
   username: string;
   messageTime?: string;
   text?: string;
-  marginBottom?: string;
 }
 
 const MessangerPage = () => {
-  const [username, setUsername] = useRecoilState(userState);
-  const [text, setText] = useState<string>('');
-  const [isButtonActive, setIsButtonActive] = useState<boolean>(false);
-  const [messageList, setMessageList] = useState<IMessageList[]>(MessageList.MessageList);
+  const locationState = useLocation().state;
   const divRef = useRef<HTMLDivElement>(null);
+
+  const [username, setUsername] = useState('장영준');
+  const [content, setContent] = useState<string>('');
+  const [isButtonActive, setIsButtonActive] = useState<boolean>(false);
+  const [userInfos, setUserInfos] = useRecoilState(userInfoState);
+  const chattingTarget = locationState[0].username;
+
+  const targetUserInfo = userInfos.filter((userInfo: IUserInfo) => {
+    return userInfo.username === chattingTarget;
+  });
+
+  const [newChatList, setNewChatList] = useState(targetUserInfo[0].chatList);
 
   const scrollToBottom = () => {
     if (divRef.current) {
@@ -32,7 +39,7 @@ const MessangerPage = () => {
 
   useEffect(() => {
     scrollToBottom();
-  }, [messageList]);
+  }, [userInfos]);
 
   const onHandleInputText = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {
@@ -41,39 +48,43 @@ const MessangerPage = () => {
     if (value) {
       setIsButtonActive(true);
     }
-    setText(value);
+    setContent(value);
   };
 
   const onSendButtonClick = () => {
     let time = `${new Date().getHours()} : ${new Date().getMinutes()}`;
-    let tempList = messageList;
-    tempList = [
-      ...tempList,
-      {
-        username: username,
-        messageTime: time,
-        text: text,
-      },
-    ];
-    setMessageList(tempList);
-    setText('');
+
+    let tempList = newChatList;
+    if (tempList) {
+      tempList = [
+        ...tempList,
+        {
+          username: username,
+          messageTime: time,
+          text: content,
+        },
+      ];
+    }
+    setContent('');
     setIsButtonActive(false);
   };
 
   const onEnterKeyPress = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Enter') {
       let time = `${new Date().getHours()} : ${new Date().getMinutes()}`;
-      let tempList = messageList;
-      tempList = [
-        ...tempList,
-        {
-          username: username,
-          messageTime: time,
-          text: text,
-        },
-      ];
-      setMessageList(tempList);
-      setText('');
+      let tempList = newChatList;
+      if (tempList) {
+        tempList = [
+          ...tempList,
+          {
+            username: username,
+            messageTime: time,
+            text: content,
+          },
+        ];
+        setNewChatList(tempList);
+      }
+      setContent('');
       setIsButtonActive(false);
     }
   };
@@ -96,56 +107,72 @@ const MessangerPage = () => {
           </Column>
           <Column alignItems="center" gap="4px">
             <UserProfile
-              username="백짱"
+              username={chattingTarget}
               onClick={(e: any) => onClickProfileImage(e)}
-              isSelected={username === '백짱'}
+              isSelected={username === chattingTarget}
             />
-            <span style={{ fontSize: '12px' }}>백짱 </span>
+            <span style={{ fontSize: '12px' }}>{chattingTarget}</span>
           </Column>
         </Header>
         <TextShowArea ref={divRef}>
-          {messageList.map((messageInfo) =>
-            username === '장영준' ? (
-              messageInfo.username !== '장영준' ? (
+          {/* {userInfos.map((messageInfo: IUserInfo, index: number) => {
+            <chatBox cla />
+          })} */}
+          {/* {messageList.map((messageInfo: any, index: any) =>
+            messageInfo.username === chattingTarget ? (
+              username === '장영준' ? (
+                messageInfo.messageList.username !== '장영준' ? (
+                  messageInfo.chatList.map((chat: any, index: any) => {
+                    <UserMessage
+                      key={index}
+                      username={chat.username}
+                      text={chat.text}
+                      time={chat.messageTime}
+                      marginBottom="8px"
+                    />;
+                  })
+                ) : (
+                  // <UserMessage
+                  //   key={index}
+                  //   username={messageInfo.chatList.username}
+                  //   text={messageInfo.messageList.text}
+                  //   time={messageInfo.messageList.messageTime}
+                  //   marginBottom="8px"
+                  // />
+                  <UserMessage
+                    key={index}
+                    username={messageInfo.messageList.username}
+                    className="opponent-text"
+                    text={messageInfo.text}
+                    time={messageInfo.messageList.messageTime}
+                    marginBottom="8px"
+                  />
+                )
+              ) : messageInfo.messageList.username === '장영준' ? (
                 <UserMessage
-                  key={messageInfo.text}
-                  username={messageInfo.username}
-                  text={messageInfo.text}
-                  time={messageInfo.messageTime}
+                  key={index}
+                  username={messageInfo.messageList.username}
+                  text={messageInfo.messageList.text}
+                  time={messageInfo.messageList.messageTime}
                   marginBottom="8px"
                 />
               ) : (
                 <UserMessage
-                  key={messageInfo.text}
-                  username={messageInfo.username}
+                  key={index}
+                  username={messageInfo.messageList.username}
                   className="opponent-text"
-                  text={messageInfo.text}
-                  time={messageInfo.messageTime}
+                  text={messageInfo.messageList.text}
+                  time={messageInfo.messageList.messageTime}
                   marginBottom="8px"
                 />
               )
-            ) : messageInfo.username === '장영준' ? (
-              <UserMessage
-                key={messageInfo.text}
-                username={messageInfo.username}
-                text={messageInfo.text}
-                time={messageInfo.messageTime}
-                marginBottom="8px"
-              />
             ) : (
-              <UserMessage
-                key={messageInfo.text}
-                username={messageInfo.username}
-                className="opponent-text"
-                text={messageInfo.text}
-                time={messageInfo.messageTime}
-                marginBottom="8px"
-              />
+              <div>iii</div>
             )
-          )}
+          )} */}
         </TextShowArea>
         <InputTextArea>
-          <input onKeyPress={onEnterKeyPress} onChange={(e) => onHandleInputText(e)} value={text} />
+          <input onKeyPress={onEnterKeyPress} onChange={(e) => onHandleInputText(e)} value={content} />
           <button onClick={onSendButtonClick} disabled={!isButtonActive}>
             전송
           </button>

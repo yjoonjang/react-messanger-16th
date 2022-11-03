@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Row, Column } from './Wrapper.style';
 import { useRecoilValue } from 'recoil';
-import { userState } from '../../state/userState';
+import { userInfoState } from '../../state/userState';
 
 interface IMessage {
   imageSrc?: string;
@@ -10,7 +10,6 @@ interface IMessage {
   time: string | undefined;
   marginBottom?: string;
   className?: string;
-  ref?: HTMLInputElement;
 }
 
 const TextArea = styled.div`
@@ -31,41 +30,44 @@ const UserThumbnail = styled.div`
 `;
 
 const UserMessage = ({ className, imageSrc, username, text, time, marginBottom }: IMessage) => {
-  const selectedUsername = useRecoilValue(userState);
+  const userInfos = useRecoilValue(userInfoState);
+  const userInfo = userInfos.filter((userInfo) => userInfo.username === username);
+
+  console.log(userInfo);
 
   return (
     <>
-      {selectedUsername !== username ? (
-        <div className={className}>
-          <Row gap="4px" marginBottom={marginBottom}>
-            <UserThumbnail>
-              <img src={imageSrc} alt="프로필 사진" id={username} />
-            </UserThumbnail>
-            <Column gap="3px" justifyContent="center">
-              <span style={{ fontSize: '4px' }}>{username}</span>
-              <Row alignItems="end" gap="8px">
-                <TextArea>{text}</TextArea>
-                <span style={{ fontSize: '12px' }}>{time}</span>
-              </Row>
-            </Column>
-          </Row>
-        </div>
-      ) : (
-        <div className={className}>
-          <Row gap="4px" marginBottom={marginBottom}>
-            <Column gap="3px" justifyContent="center" alignItems="flex-end">
-              <span style={{ fontSize: '4px' }}>{username}</span>
-              <Row alignItems="end" gap="8px">
-                <span style={{ fontSize: '12px' }}>{time}</span>
-                <TextArea>{text}</TextArea>
-              </Row>
-            </Column>
-            <UserThumbnail>
-              <img src={imageSrc} alt="프로필 사진" id={username} />
-            </UserThumbnail>
-          </Row>
-        </div>
-      )}
+      {/* {userInfo !== username ? ( */}
+      <div className={className}>
+        <Row gap="4px" marginBottom={marginBottom}>
+          <UserThumbnail>
+            <img src={imageSrc} alt="프로필 사진" id={username} />
+          </UserThumbnail>
+          <Column gap="3px" justifyContent="center">
+            <span style={{ fontSize: '4px' }}>{username}</span>
+            <Row alignItems="end" gap="8px">
+              <TextArea>{text}</TextArea>
+              <span style={{ fontSize: '12px' }}>{time}</span>
+            </Row>
+          </Column>
+        </Row>
+      </div>
+      {/* ) : ( */}
+      <div className={className}>
+        <Row gap="4px" marginBottom={marginBottom}>
+          <Column gap="3px" justifyContent="center" alignItems="flex-end">
+            <span style={{ fontSize: '4px' }}>{username}</span>
+            <Row alignItems="end" gap="8px">
+              <span style={{ fontSize: '12px' }}>{time}</span>
+              <TextArea>{text}</TextArea>
+            </Row>
+          </Column>
+          <UserThumbnail>
+            <img src={imageSrc} alt="프로필 사진" id={username} />
+          </UserThumbnail>
+        </Row>
+      </div>
+      {/* )} */}
     </>
   );
 };

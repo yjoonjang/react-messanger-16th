@@ -1,18 +1,18 @@
 import { Row, Column } from '../elements/Wrapper.style';
 import UserBar from '../elements/UserBar';
 import { useRecoilValue } from 'recoil';
-import { userListState } from '../../state/userState';
+import { userInfoState } from '../../state/userState';
 import { useNavigate } from 'react-router';
 
 const ChattingPage = () => {
   const navigate = useNavigate();
-  const userList = useRecoilValue(userListState);
+  const userList = useRecoilValue(userInfoState);
 
   const onClickChattingRoom = (event: React.MouseEvent<HTMLButtonElement>) => {
     const username = event.currentTarget.value;
-    navigate(`/messageRoom/:${username}`);
+    const userinfo = userList.filter((userInfo) => userInfo.username === username);
+    navigate(`/messageRoom/:${username}`, { state: userinfo });
   };
-  // console.log(userList[0].messageList[userList[0].messageList.length - 1]);
 
   return (
     <>
@@ -22,9 +22,9 @@ const ChattingPage = () => {
       <Column>
         <>
           {userList.map((user, index) => {
-            if (user.messageList) {
-              const messageListLength = user.messageList?.length;
-              const lastMessage = user.messageList[messageListLength - 1];
+            if (user.chatList) {
+              const messageListLength = user.chatList?.length;
+              const lastMessage = user.chatList[messageListLength - 1];
 
               return (
                 <UserBar
@@ -32,6 +32,7 @@ const ChattingPage = () => {
                   value={user.username}
                   username={user.username}
                   introduction={lastMessage.text}
+                  date={lastMessage.messageTime}
                   onClick={onClickChattingRoom}
                 />
               );

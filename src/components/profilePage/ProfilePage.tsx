@@ -1,10 +1,10 @@
 import { Row, Column } from '../elements/Wrapper.style';
 import UserBar from '../elements/UserBar';
 import { useRecoilValue } from 'recoil';
-import { userListState } from '../../state/userState';
+import { userInfoState } from '../../state/userState';
 
 const ProfilePage = () => {
-  const userList = useRecoilValue(userListState);
+  const userList = useRecoilValue(userInfoState);
   return (
     <>
       <Row width="100%" justifyContent="space-between" alignItems="start">
