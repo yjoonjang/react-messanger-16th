@@ -1,6 +1,6 @@
 // import MessangerPage from './components/messangerPage/MessangerPage';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import HomePage from './components/homePage/homePage';
+import HomePage from './components/homePage/HomePage';
 import ProfilePage from './components/profilePage/ProfilePage';
 import ChattingListPage from './components/chattingListPage/ChattingListPage';
 import SettingPage from './components/settingPage/settingPage';

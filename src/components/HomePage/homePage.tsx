@@ -1,4 +1,4 @@
-import { Container, Wrapper, NavigationBar, FriendContainer } from './homePage.styled';
+import { Container, Wrapper, NavigationBar, FriendContainer } from './HomePage.styled';
 import ProfileIcon from '../../image/emoji/ProfileIcon';
 import MessageIcon from '../../image/emoji/MessageIcon';
 import SettingIcon from '../../image/emoji/SettingIcon';
