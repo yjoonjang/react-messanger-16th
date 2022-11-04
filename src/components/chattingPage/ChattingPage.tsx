@@ -25,14 +25,9 @@ const ChattingPage = () => {
   const [userInfos, setUserInfos] = useRecoilState(userState);
   const [chatList, setChatList] = useRecoilState(chatState);
 
-  const chattingTarget = locationState[0].username;
-  const targetChatList = chatList[locationState[0].userId];
-
-  // const targetUserInfo = userInfos.filter((userInfo: IUserInfo) => {
-  //   return userInfo.username === chattingTarget;
-  // });
-
-  // const [newChatList, setNewChatList] = useState(targetUserInfo[0].chatList);
+  const targetUsername = locationState[0].username;
+  const targetUserId = locationState[0].userId;
+  const [targetChatList, setTargetChatList] = useState(chatList[targetUserId]);
 
   const scrollToBottom = () => {
     if (divRef.current) {
@@ -42,7 +37,11 @@ const ChattingPage = () => {
 
   useEffect(() => {
     scrollToBottom();
-  }, [userInfos]);
+  }, [targetChatList]);
+
+  useEffect(() => {
+    setTargetChatList(chatList[targetUserId]);
+  }, [chatList]);
 
   const onHandleInputText = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {
@@ -54,43 +53,43 @@ const ChattingPage = () => {
     setContent(value);
   };
 
-  // const onSendButtonClick = () => {
-  //   let time = `${new Date().getHours()} : ${new Date().getMinutes()}`;
+  const updateChatList = () => {
+    let time = `${new Date().getHours()} : ${new Date().getMinutes()}`;
 
-  //   let tempList = newChatList;
-  //   if (tempList) {
-  //     tempList = [
-  //       ...tempList,
-  //       {
-  //         username: username,
-  //         messageTime: time,
-  //         text: content,
-  //       },
-  //     ];
-  //   }
-  //   setContent('');
-  //   setIsButtonActive(false);
-  // };
+    let tempList = targetChatList;
+    tempList = [
+      ...tempList,
+      {
+        username: username,
+        messageTime: time,
+        content: content,
+      },
+    ];
 
-  // const onEnterKeyPress = (e: React.KeyboardEvent<HTMLDivElement>) => {
-  //   if (e.key === 'Enter') {
-  //     let time = `${new Date().getHours()} : ${new Date().getMinutes()}`;
-  //     let tempList = newChatList;
-  //     if (tempList) {
-  //       tempList = [
-  //         ...tempList,
-  //         {
-  //           username: username,
-  //           messageTime: time,
-  //           text: content,
-  //         },
-  //       ];
-  //       setNewChatList(tempList);
-  //     }
-  //     setContent('');
-  //     setIsButtonActive(false);
-  //   }
-  // };
+    setChatList(() => {
+      let tempList = chatList[targetUserId];
+
+      tempList = [
+        ...tempList,
+        {
+          username: username,
+          messageTime: time,
+          content: content,
+        },
+      ];
+
+      return { ...chatList, [targetUserId]: tempList };
+    });
+
+    setContent('');
+    setIsButtonActive(false);
+  };
+
+  const onEnterKeyPress = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === 'Enter') {
+      updateChatList();
+    }
+  };
 
   const onClickProfileImage = (e: React.MouseEvent<HTMLButtonElement>) => {
     setUsername(e.currentTarget.children[0].id);
@@ -110,87 +109,46 @@ const ChattingPage = () => {
           </Column>
           <Column alignItems="center" gap="4px">
             <UserProfile
-              username={chattingTarget}
+              username={targetUsername}
               onClick={(e: any) => onClickProfileImage(e)}
-              isSelected={username === chattingTarget}
+              isSelected={username === targetUsername}
             />
-            <span style={{ fontSize: '12px' }}>{chattingTarget}</span>
+            <span style={{ fontSize: '12px' }}>{targetUsername}</span>
           </Column>
         </Header>
+
         <TextShowArea ref={divRef}>
           {targetChatList.map((chat: IChat, index: number) => {
-            return (
-              <ChatBox
-                key={index}
-                time={chat.messageTime}
-                content={chat.content}
-                chatOwner={chat.username}
-                selectedUser={username}
-              />
-            );
-          })}
-          {/* {userInfos.map((messageInfo: IUserInfo, index: number) => {
-            <chatBox cla />
-          })} */}
-          {/* {messageList.map((messageInfo: any, index: any) =>
-            messageInfo.username === chattingTarget ? (
-              username === '장영준' ? (
-                messageInfo.messageList.username !== '장영준' ? (
-                  messageInfo.chatList.map((chat: any, index: any) => {
-                    <UserMessage
-                      key={index}
-                      username={chat.username}
-                      text={chat.text}
-                      time={chat.messageTime}
-                      marginBottom="8px"
-                    />;
-                  })
-                ) : (
-                  // <UserMessage
-                  //   key={index}
-                  //   username={messageInfo.chatList.username}
-                  //   text={messageInfo.messageList.text}
-                  //   time={messageInfo.messageList.messageTime}
-                  //   marginBottom="8px"
-                  // />
-                  <UserMessage
-                    key={index}
-                    username={messageInfo.messageList.username}
-                    className="opponent-text"
-                    text={messageInfo.text}
-                    time={messageInfo.messageList.messageTime}
-                    marginBottom="8px"
-                  />
-                )
-              ) : messageInfo.messageList.username === '장영준' ? (
-                <UserMessage
+            if (chat.username === username) {
+              return (
+                <ChatBox
                   key={index}
-                  username={messageInfo.messageList.username}
-                  text={messageInfo.messageList.text}
-                  time={messageInfo.messageList.messageTime}
-                  marginBottom="8px"
-                />
-              ) : (
-                <UserMessage
-                  key={index}
-                  username={messageInfo.messageList.username}
                   className="opponent-text"
-                  text={messageInfo.messageList.text}
-                  time={messageInfo.messageList.messageTime}
-                  marginBottom="8px"
+                  time={chat.messageTime}
+                  content={chat.content}
+                  chatOwner={chat.username}
+                  selectedUser={username}
                 />
-              )
-            ) : (
-              <div>iii</div>
-            )
-          )} */}
+              );
+            } else {
+              return (
+                <ChatBox
+                  key={index}
+                  time={chat.messageTime}
+                  content={chat.content}
+                  chatOwner={chat.username}
+                  selectedUser={username}
+                />
+              );
+            }
+          })}
         </TextShowArea>
-        {/* <InputTextArea>
+        <InputTextArea>
           <input onKeyPress={onEnterKeyPress} onChange={(e) => onHandleInputText(e)} value={content} />
-          <button onClick={onSendButtonClick} disabled={!isButtonActive}>
+          <button onClick={updateChatList} disabled={!isButtonActive}>
             전송
           </button>
-        </InputTextArea> */}
+        </InputTextArea>
       </MessangerBox>
     </Container>
   );

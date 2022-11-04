@@ -13,8 +13,6 @@ interface chatBoxProps {
 }
 
 const ChatBox = ({ className, marginBottom, imageSrc, time, content, chatOwner, selectedUser }: chatBoxProps) => {
-  console.log('hi');
-
   return (
     <>
       {selectedUser !== chatOwner ? (
@@ -27,18 +25,18 @@ const ChatBox = ({ className, marginBottom, imageSrc, time, content, chatOwner, 
               <span style={{ fontSize: '4px' }}>{chatOwner}</span>
               <Row alignItems="end" gap="8px">
                 <TextArea>{content}</TextArea>
-                <span style={{ fontSize: '12px' }}>{time}</span>
+                <span style={{ fontSize: '11px' }}>{time}</span>
               </Row>
             </Column>
           </Row>
         </div>
       ) : (
         <div className={className}>
-          <Row gap="4px" marginBottom={marginBottom}>
+          <Row gap="4px" marginBottom="8px">
             <Column gap="3px" justifyContent="center" alignItems="flex-end">
               <span style={{ fontSize: '4px' }}>{chatOwner}</span>
               <Row alignItems="end" gap="8px">
-                <span style={{ fontSize: '12px' }}>{time}</span>
+                <span style={{ fontSize: '11px' }}>{time}</span>
                 <TextArea>{content}</TextArea>
               </Row>
             </Column>
