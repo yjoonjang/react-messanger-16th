@@ -54,7 +54,7 @@ export const InputTextArea = styled.div.attrs<{ isButtonActive: boolean }>((prop
   padding: 12px;
   gap: 20px;
 
-  input {
+  & .text-area {
     width: 70%;
     height: 100%;
     border: none;
@@ -62,7 +62,7 @@ export const InputTextArea = styled.div.attrs<{ isButtonActive: boolean }>((prop
     vertical-align: top;
   }
 
-  button {
+  & .send-button {
     height: 100%;
     width: 25%;
     padding: 10px;
@@ -71,5 +71,10 @@ export const InputTextArea = styled.div.attrs<{ isButtonActive: boolean }>((prop
     &:disabled {
       background-color: #ffe68e;
     }
+  }
+
+  & .camera-icon {
+    padding-left: 4px;
+    cursor: pointer;
   }
 `;

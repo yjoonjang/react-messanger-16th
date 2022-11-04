@@ -2,18 +2,11 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useLocation } from 'react-router';
 import { Container, MessangerBox, Header, TextShowArea, InputTextArea } from './ChattingPage.styled';
 import UserProfile from '../elements/UserProfile';
-import { Column } from '../elements/Wrapper.style';
+import { Column, Row } from '../elements/Wrapper.style';
 import { userState, chatState, IChat } from '../../state/userState';
 import { useRecoilState } from 'recoil';
 import ChatBox from '../elements/ChatBox';
-
-// TODO: 유저 프로필 이미지 선택 시 유저 이름 변경 + 메세지 띄우기
-
-interface IMessageList {
-  username: string;
-  messageTime?: string;
-  text?: string;
-}
+import CameraIcon from '../../image/emoji/CameraIcon';
 
 const ChattingPage = () => {
   const locationState = useLocation().state;
@@ -24,6 +17,7 @@ const ChattingPage = () => {
   const [isButtonActive, setIsButtonActive] = useState<boolean>(false);
   const [userInfos, setUserInfos] = useRecoilState(userState);
   const [chatList, setChatList] = useRecoilState(chatState);
+  const [image, setImage] = useState<string | ArrayBuffer | null>();
 
   const targetUsername = locationState[0].username;
   const targetUserId = locationState[0].userId;
@@ -54,32 +48,25 @@ const ChattingPage = () => {
   };
 
   const updateChatList = () => {
-    let time = `${new Date().getHours()} : ${new Date().getMinutes()}`;
+    if (typeof content === 'string' && content.trim().length === 0) {
+      window.alert('문자를 입력해주세요.');
+    } else {
+      let time = `${new Date().getHours()} : ${new Date().getMinutes()}`;
 
-    let tempList = targetChatList;
-    tempList = [
-      ...tempList,
-      {
-        username: username,
-        messageTime: time,
-        content: content,
-      },
-    ];
+      setChatList(() => {
+        let tempList = chatList[targetUserId];
+        tempList = [
+          ...tempList,
+          {
+            username: username,
+            messageTime: time,
+            content: content,
+          },
+        ];
 
-    setChatList(() => {
-      let tempList = chatList[targetUserId];
-
-      tempList = [
-        ...tempList,
-        {
-          username: username,
-          messageTime: time,
-          content: content,
-        },
-      ];
-
-      return { ...chatList, [targetUserId]: tempList };
-    });
+        return { ...chatList, [targetUserId]: tempList };
+      });
+    }
 
     setContent('');
     setIsButtonActive(false);
@@ -93,6 +80,31 @@ const ChattingPage = () => {
 
   const onClickProfileImage = (e: React.MouseEvent<HTMLButtonElement>) => {
     setUsername(e.currentTarget.children[0].id);
+  };
+
+  const encodeFileToBase64 = (files: any) => {
+    const file = files[0];
+    console.log(file);
+
+    let fileReader = new FileReader();
+    const time = `${new Date().getHours()} : ${new Date().getMinutes()}`;
+
+    fileReader.onload = () => {
+      setChatList(() => {
+        let tempList = chatList[targetUserId];
+        tempList = [
+          ...tempList,
+          {
+            username: username,
+            messageTime: time,
+            content: fileReader.result,
+          },
+        ];
+
+        return { ...chatList, [targetUserId]: tempList };
+      });
+    };
+    fileReader.readAsDataURL(file);
   };
 
   return (
@@ -144,8 +156,26 @@ const ChattingPage = () => {
           })}
         </TextShowArea>
         <InputTextArea>
-          <input onKeyPress={onEnterKeyPress} onChange={(e) => onHandleInputText(e)} value={content} />
-          <button onClick={updateChatList} disabled={!isButtonActive}>
+          <div>
+            <input
+              type="file"
+              id="img-upload"
+              style={{ display: 'none' }}
+              onChange={(e) => encodeFileToBase64(e.target.files)}
+              accept="image/x-png,image/gif,image/jpeg"
+            />
+            <label htmlFor="img-upload">
+              <CameraIcon className="camera-icon" />
+            </label>
+          </div>
+          <input
+            className="text-area"
+            autoFocus
+            onKeyPress={onEnterKeyPress}
+            onChange={(e) => onHandleInputText(e)}
+            value={content}
+          />
+          <button className="send-button" onClick={updateChatList} disabled={!isButtonActive}>
             전송
           </button>
         </InputTextArea>

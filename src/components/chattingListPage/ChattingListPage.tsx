@@ -32,7 +32,7 @@ const ChattingListPage = () => {
                 key={user.userId}
                 userId={user.userId}
                 username={user.username}
-                statusMessage={lastChat.content}
+                statusMessage={lastChat.content.length > 1000 ? '사진을 보냈습니다.' : lastChat.content}
                 date={lastChat.messageTime}
                 onClick={onClickChattingRoom}
               />
