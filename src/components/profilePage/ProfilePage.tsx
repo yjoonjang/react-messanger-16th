@@ -3,7 +3,7 @@ import UserBar from '../elements/UserBar';
 import { useRecoilValue } from 'recoil';
 import { userState } from '../../state/userState';
 import SearchIcon from '../../image/emoji/SearchIcon';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IUser } from '../../state/userState';
 
 const ProfilePage = () => {
@@ -15,15 +15,17 @@ const ProfilePage = () => {
   const onHandleInputText = (e: React.FormEvent<HTMLInputElement>) => {
     e.preventDefault();
     const text = e.currentTarget.value;
-
     setInputValue(text);
-    let tempList = newUserList.filter((userList) => {
-      userList.username.includes(text);
-      return;
-    });
-
-    setNewUserList(tempList);
   };
+
+  useEffect(() => {
+    let tempList = userList.filter((user) => {
+      if (user.username.includes(inputValue)) {
+        return user;
+      }
+    });
+    setNewUserList(tempList);
+  }, [inputValue]);
 
   const onClickSearchIcon = () => {
     setIsSearchIconClicked(!isSearchIconClicked);
