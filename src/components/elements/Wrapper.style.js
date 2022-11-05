@@ -32,3 +32,9 @@ export const Column = styled.div.attrs((props) => ({
   margin-bottom: ${(props) => props.marginBottom};
   gap: ${(props) => props.gap};
 `;
+
+export const MessangerWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 20px 24px;
+`;

@@ -5,14 +5,15 @@ interface userBarProps {
   username: string;
   date?: string;
   statusMessage?: string;
+  marginTop?: string;
   userId?: number;
   imageSrc?: string;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-const UserBar = ({ username, date, statusMessage: introduction, imageSrc, onClick, userId }: userBarProps) => {
+const UserBar = ({ username, date, statusMessage, marginTop, imageSrc, onClick, userId }: userBarProps) => {
   return (
-    <Wrapper onClick={onClick} value={userId}>
+    <Wrapper onClick={onClick} value={userId} marginTop={marginTop}>
       <Row width="100%" gap="12px">
         <ImageThumbnail>
           <img src={imageSrc} />
@@ -22,7 +23,7 @@ const UserBar = ({ username, date, statusMessage: introduction, imageSrc, onClic
             <span style={{ fontSize: '16px' }}>{username}</span>
             <span style={{ fontSize: '12px', color: '#a6a3a3' }}>{date}</span>
           </Row>
-          <span style={{ fontSize: '12px', color: '#7b7878' }}>{introduction}</span>
+          <span style={{ fontSize: '12px', color: '#7b7878' }}>{statusMessage}</span>
         </Column>
       </Row>
     </Wrapper>
@@ -31,14 +32,16 @@ const UserBar = ({ username, date, statusMessage: introduction, imageSrc, onClic
 
 export default UserBar;
 
-const Wrapper = styled.button`
+const Wrapper = styled.button<{ marginTop?: string }>`
   width: 100%;
   height: 70px;
+  padding-left: 20px;
   display: flex;
   align-items: center;
+  margin-top: ${(props) => props.marginTop};
 
   &:hover {
-    background-color: #f1f0f0;
+    background-color: #f4f3f3;
   }
 `;
 

@@ -1,4 +1,4 @@
-import { Row, Column } from '../elements/Wrapper.style';
+import { Row, Column, MessangerWrapper } from '../elements/Wrapper.style';
 import UserBar from '../elements/UserBar';
 import { useRecoilValue } from 'recoil';
 import { userState, chatState } from '../../state/userState';
@@ -18,7 +18,7 @@ const ChattingListPage = () => {
   return (
     <>
       <Row width="100%" justifyContent="space-between" alignItems="start">
-        <span style={{ fontWeight: '600' }}>채팅</span>
+        <span style={{ fontWeight: '800', fontSize: '18px', padding: '24px 20px 0px 20px' }}>채팅</span>
       </Row>
       <Column>
         <>

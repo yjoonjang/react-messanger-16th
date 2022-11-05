@@ -54,7 +54,12 @@ const ChatBox = ({ className, marginBottom, imageSrc, time, content, chatOwner, 
               <span style={{ fontSize: '4px' }}>{chatOwner}</span>
               <Row alignItems="end" gap="8px">
                 <span style={{ fontSize: '11px' }}>{time}</span>
-                <img className="image-container" style={{ width: '200px', height: '200px' }} src={content} />
+                <img
+                  alt="프로필 사진"
+                  className="image-container"
+                  style={{ width: '200px', height: '200px' }}
+                  src={content}
+                />
               </Row>
             </Column>
             <UserThumbnail>
