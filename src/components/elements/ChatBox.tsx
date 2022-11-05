@@ -67,7 +67,7 @@ const ChatBox = ({
                 <img
                   alt="프로필 사진"
                   className="image-container"
-                  style={{ width: '200px', height: '200px' }}
+                  style={{ width: '200px', height: '200px', objectFit: 'cover' }}
                   src={content}
                 />
               </Row>
@@ -98,17 +98,6 @@ const ChatBox = ({
 };
 
 export default ChatBox;
-
-/*
-로그인된 유저
-채팅 타겟
-선택된 사람
-
-초기: 로그인된 유저와 채팅 타겟의 채팅
-if 선택된 사람 == 로그인된 유저 {
-
-}
-*/
 
 const TextArea = styled.div`
   padding: 4px 8px;
