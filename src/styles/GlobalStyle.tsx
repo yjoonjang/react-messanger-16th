@@ -9,7 +9,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    font-family: Montserrat, sans-serif;
+    font-family: SCoreMontserrat;
     line-height: 1.5;
   }
 

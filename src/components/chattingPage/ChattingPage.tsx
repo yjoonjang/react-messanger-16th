@@ -182,6 +182,7 @@ const ChattingPage = () => {
               </label>
             </div>
             <input
+              type="text"
               className="text-area"
               autoFocus
               onKeyPress={onEnterKeyPress}
