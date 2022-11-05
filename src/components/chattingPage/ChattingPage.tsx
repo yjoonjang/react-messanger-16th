@@ -15,6 +15,7 @@ const ChattingPage = () => {
 
   const [username, setUsername] = useState('장영준');
   const [content, setContent] = useState<string>('');
+  const [imageHeight, setImageHeight] = useState<number>(0);
   const [isButtonActive, setIsButtonActive] = useState<boolean>(false);
   const [userInfos, setUserInfos] = useRecoilState(userState);
   const [chatList, setChatList] = useRecoilState(chatState);
@@ -85,12 +86,20 @@ const ChattingPage = () => {
 
   const encodeFileToBase64 = (files: any) => {
     const file = files[0];
-    console.log(file);
 
     let fileReader = new FileReader();
     const time = `${new Date().getHours()} : ${new Date().getMinutes()}`;
 
     fileReader.onload = () => {
+      let img = new Image();
+      img.onload = () => {
+        console.log((img.height / img.width) * 200);
+        setImageHeight((img.height / img.width) * 200);
+      };
+      if (typeof fileReader.result === 'string') {
+        img.src = fileReader.result;
+      }
+
       setChatList(() => {
         let tempList = chatList[targetUserId];
         tempList = [
@@ -140,6 +149,7 @@ const ChattingPage = () => {
                     className="opponent-text"
                     time={chat.messageTime}
                     content={chat.content}
+                    imageHeight={imageHeight}
                     chatOwner={chat.username}
                     selectedUser={username}
                   />
@@ -150,6 +160,7 @@ const ChattingPage = () => {
                     key={index}
                     time={chat.messageTime}
                     content={chat.content}
+                    imageHeight={imageHeight}
                     chatOwner={chat.username}
                     selectedUser={username}
                   />
