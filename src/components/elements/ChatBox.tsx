@@ -50,7 +50,7 @@ const ChatBox = ({
               <Column gap="3px" justifyContent="center">
                 <span style={{ fontSize: '4px' }}>{chatOwner}</span>
                 <Row alignItems="end" gap="8px">
-                  <TextArea>{content}</TextArea>
+                  <TextArea style={{ maxWidth: '200px' }}>{content}</TextArea>
                   <span style={{ fontSize: '11px' }}>{time}</span>
                 </Row>
               </Column>
@@ -84,7 +84,7 @@ const ChatBox = ({
               <span style={{ fontSize: '4px' }}>{chatOwner}</span>
               <Row alignItems="end" gap="8px">
                 <span style={{ fontSize: '11px' }}>{time}</span>
-                <TextArea>{content}</TextArea>
+                <TextArea style={{ maxWidth: '200px' }}>{content}</TextArea>
               </Row>
             </Column>
             <UserThumbnail>
@@ -114,6 +114,7 @@ const TextArea = styled.div`
   padding: 4px 8px;
   background-color: #efefef;
   border-radius: 10px;
+  word-wrap: break-word;
 `;
 
 const UserThumbnail = styled.div`
