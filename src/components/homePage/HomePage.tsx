@@ -2,17 +2,21 @@ import { Container, Wrapper, NavigationBar, FriendContainer } from './HomePage.s
 import ProfileIcon from '../../image/emoji/ProfileIcon';
 import MessageIcon from '../../image/emoji/MessageIcon';
 import SettingIcon from '../../image/emoji/SettingIcon';
-import React, { useState } from 'react';
+import React from 'react';
+import { useRecoilState } from 'recoil';
 import { Outlet, useNavigate } from 'react-router';
+import { selectedContentState } from '../../state/userState';
 
 const HomePage = () => {
-  const [selectedContent, setSelectedContent] = useState<string>('profile');
+  const [selectedContent, setSelectedContent] = useRecoilState<string>(selectedContentState);
   const navigate = useNavigate();
 
   const onClickIcon = (event: React.MouseEvent<HTMLButtonElement>) => {
     const pathName = event.currentTarget.name;
     setSelectedContent(pathName);
-    navigate(`/${pathName}`);
+    if (pathName === 'profile') {
+      navigate('/');
+    } else navigate(`/${pathName}`);
   };
 
   return (

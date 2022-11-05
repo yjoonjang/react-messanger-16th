@@ -11,7 +11,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />}>
-          <Route path="profile" element={<ProfilePage />} />
+          <Route path="" element={<ProfilePage />} />
           <Route path="chattingList" element={<ChattingListPage />} />
           <Route path="setting" element={<SettingPage />} />
         </Route>

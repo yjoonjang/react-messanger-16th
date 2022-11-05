@@ -8,11 +8,21 @@ interface chatBoxProps {
   time: string;
   content: string;
   chatOwner: string;
-  // chattingTarget: string;
   selectedUser: string;
+  imageSize?: number;
+  imageHeight?: number;
 }
 
-const ChatBox = ({ className, marginBottom, imageSrc, time, content, chatOwner, selectedUser }: chatBoxProps) => {
+const ChatBox = ({
+  className,
+  marginBottom,
+  imageSrc,
+  time,
+  content,
+  chatOwner,
+  selectedUser,
+  imageHeight,
+}: chatBoxProps) => {
   return (
     <>
       {selectedUser !== chatOwner ? (
@@ -25,7 +35,7 @@ const ChatBox = ({ className, marginBottom, imageSrc, time, content, chatOwner, 
               <Column gap="3px" justifyContent="center">
                 <span style={{ fontSize: '4px' }}>{chatOwner}</span>
                 <Row alignItems="end" gap="8px">
-                  <img className="image-container" style={{ width: '200px', height: '200px' }} src={content} />
+                  <img className="image-container" style={{ width: '200px', height: imageHeight }} src={content} />
                   <span style={{ fontSize: '11px' }}>{time}</span>
                 </Row>
               </Column>
@@ -54,7 +64,12 @@ const ChatBox = ({ className, marginBottom, imageSrc, time, content, chatOwner, 
               <span style={{ fontSize: '4px' }}>{chatOwner}</span>
               <Row alignItems="end" gap="8px">
                 <span style={{ fontSize: '11px' }}>{time}</span>
-                <img className="image-container" style={{ width: '200px', height: '200px' }} src={content} />
+                <img
+                  alt="프로필 사진"
+                  className="image-container"
+                  style={{ width: '200px', height: '200px' }}
+                  src={content}
+                />
               </Row>
             </Column>
             <UserThumbnail>

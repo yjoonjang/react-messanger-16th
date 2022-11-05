@@ -18,7 +18,7 @@ const ChattingListPage = () => {
   return (
     <>
       <Row width="100%" justifyContent="space-between" alignItems="start">
-        <span style={{ fontWeight: '600' }}>채팅</span>
+        <span style={{ fontWeight: '800', fontSize: '18px', padding: '24px 20px 0px 20px' }}>채팅</span>
       </Row>
       <Column>
         <>

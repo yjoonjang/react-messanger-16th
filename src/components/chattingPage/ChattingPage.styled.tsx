@@ -1,20 +1,20 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  width: 100%;
-  height: 100vh;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  height: 100vh;
 `;
 
 export const MessangerBox = styled.div`
-  width: 30vw;
-  height: 90%;
+  width: 100%;
+  height: 100%;
   justify-content: center;
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 2px 5px 5px 5px gray;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 `;
 
 export const Header = styled.header`

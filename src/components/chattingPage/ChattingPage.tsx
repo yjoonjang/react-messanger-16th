@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useLocation } from 'react-router';
 import { Container, MessangerBox, Header, TextShowArea, InputTextArea } from './ChattingPage.styled';
+import { Wrapper } from '../homePage/HomePage.styled';
 import UserProfile from '../elements/UserProfile';
-import { Column, Row } from '../elements/Wrapper.style';
+import { Column } from '../elements/Wrapper.style';
 import { userState, chatState, IChat } from '../../state/userState';
 import { useRecoilState } from 'recoil';
 import ChatBox from '../elements/ChatBox';
@@ -14,6 +15,7 @@ const ChattingPage = () => {
 
   const [username, setUsername] = useState('장영준');
   const [content, setContent] = useState<string>('');
+  const [imageHeight, setImageHeight] = useState<number>(0);
   const [isButtonActive, setIsButtonActive] = useState<boolean>(false);
   const [userInfos, setUserInfos] = useRecoilState(userState);
   const [chatList, setChatList] = useRecoilState(chatState);
@@ -84,12 +86,20 @@ const ChattingPage = () => {
 
   const encodeFileToBase64 = (files: any) => {
     const file = files[0];
-    console.log(file);
 
     let fileReader = new FileReader();
     const time = `${new Date().getHours()} : ${new Date().getMinutes()}`;
 
     fileReader.onload = () => {
+      let img = new Image();
+      img.onload = () => {
+        console.log((img.height / img.width) * 200);
+        setImageHeight((img.height / img.width) * 200);
+      };
+      if (typeof fileReader.result === 'string') {
+        img.src = fileReader.result;
+      }
+
       setChatList(() => {
         let tempList = chatList[targetUserId];
         tempList = [
@@ -109,77 +119,81 @@ const ChattingPage = () => {
 
   return (
     <Container>
-      <MessangerBox>
-        <Header>
-          <Column alignItems="center" gap="4px">
-            <UserProfile
-              username="장영준"
-              onClick={(e: any) => onClickProfileImage(e)}
-              isSelected={username === '장영준'}
-            />
-            <span style={{ fontSize: '12px' }}>장영준</span>
-          </Column>
-          <Column alignItems="center" gap="4px">
-            <UserProfile
-              username={targetUsername}
-              onClick={(e: any) => onClickProfileImage(e)}
-              isSelected={username === targetUsername}
-            />
-            <span style={{ fontSize: '12px' }}>{targetUsername}</span>
-          </Column>
-        </Header>
+      <Wrapper>
+        <MessangerBox>
+          <Header>
+            <Column alignItems="center" gap="4px">
+              <UserProfile
+                username="장영준"
+                onClick={(e: any) => onClickProfileImage(e)}
+                isSelected={username === '장영준'}
+              />
+              <span style={{ fontSize: '12px' }}>장영준</span>
+            </Column>
+            <Column alignItems="center" gap="4px">
+              <UserProfile
+                username={targetUsername}
+                onClick={(e: any) => onClickProfileImage(e)}
+                isSelected={username === targetUsername}
+              />
+              <span style={{ fontSize: '12px' }}>{targetUsername}</span>
+            </Column>
+          </Header>
 
-        <TextShowArea ref={divRef}>
-          {targetChatList.map((chat: IChat, index: number) => {
-            if (chat.username === username) {
-              return (
-                <ChatBox
-                  key={index}
-                  className="opponent-text"
-                  time={chat.messageTime}
-                  content={chat.content}
-                  chatOwner={chat.username}
-                  selectedUser={username}
-                />
-              );
-            } else {
-              return (
-                <ChatBox
-                  key={index}
-                  time={chat.messageTime}
-                  content={chat.content}
-                  chatOwner={chat.username}
-                  selectedUser={username}
-                />
-              );
-            }
-          })}
-        </TextShowArea>
-        <InputTextArea>
-          <div>
+          <TextShowArea ref={divRef}>
+            {targetChatList.map((chat: IChat, index: number) => {
+              if (chat.username === username) {
+                return (
+                  <ChatBox
+                    key={index}
+                    className="opponent-text"
+                    time={chat.messageTime}
+                    content={chat.content}
+                    imageHeight={imageHeight}
+                    chatOwner={chat.username}
+                    selectedUser={username}
+                  />
+                );
+              } else {
+                return (
+                  <ChatBox
+                    key={index}
+                    time={chat.messageTime}
+                    content={chat.content}
+                    imageHeight={imageHeight}
+                    chatOwner={chat.username}
+                    selectedUser={username}
+                  />
+                );
+              }
+            })}
+          </TextShowArea>
+          <InputTextArea>
+            <div>
+              <input
+                type="file"
+                id="img-upload"
+                style={{ display: 'none' }}
+                onChange={(e) => encodeFileToBase64(e.target.files)}
+                accept="image/x-png,image/gif,image/jpeg"
+              />
+              <label htmlFor="img-upload">
+                <CameraIcon className="camera-icon" />
+              </label>
+            </div>
             <input
-              type="file"
-              id="img-upload"
-              style={{ display: 'none' }}
-              onChange={(e) => encodeFileToBase64(e.target.files)}
-              accept="image/x-png,image/gif,image/jpeg"
+              className="text-area"
+              autoFocus
+              onKeyPress={onEnterKeyPress}
+              onChange={(e) => onHandleInputText(e)}
+              value={content}
             />
-            <label htmlFor="img-upload">
-              <CameraIcon className="camera-icon" />
-            </label>
-          </div>
-          <input
-            className="text-area"
-            autoFocus
-            onKeyPress={onEnterKeyPress}
-            onChange={(e) => onHandleInputText(e)}
-            value={content}
-          />
-          <button className="send-button" onClick={updateChatList} disabled={!isButtonActive}>
-            전송
-          </button>
-        </InputTextArea>
-      </MessangerBox>
+            <button className="send-button" onClick={updateChatList} disabled={!isButtonActive}>
+              전송
+            </button>
+          </InputTextArea>
+        </MessangerBox>
+      </Wrapper>
     </Container>
   );
 };

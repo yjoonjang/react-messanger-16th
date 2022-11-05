@@ -9,11 +9,12 @@ export const Container = styled.div`
 
 export const Wrapper = styled.div`
   width: 400px;
-  height: 700px;
-  border: 2px solid black;
+  height: 680px;
+  /* border: 2px solid black; */
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
   border-radius: 10px;
   display: flex;
-  flex-direction: row;
   overflow: hidden;
 `;
 
@@ -31,7 +32,6 @@ export const FriendContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 20px 24px;
   font-size: 20px;
   gap: 20px;
 

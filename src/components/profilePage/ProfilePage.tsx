@@ -33,13 +33,27 @@ const ProfilePage = () => {
 
   return (
     <>
-      <Row width="100%" justifyContent="space-between" alignItems="start">
-        <span style={{ fontWeight: '600' }}>파트짱</span>
+      <Row width="100%" justifyContent="space-between" alignItems="start" style={{ padding: '24px 20px 0px 20px' }}>
+        <span style={{ fontWeight: '800', fontSize: '18px' }}>친구</span>
         <SearchIcon onClick={onClickSearchIcon} />
       </Row>
       {isSearchIconClicked ? (
         <Column>
-          <input onChange={onHandleInputText} style={{ width: '100%', marginBottom: '12px' }} value={inputValue} />
+          <input
+            onChange={onHandleInputText}
+            autoFocus
+            style={{
+              width: '100%',
+              marginTop: '20px',
+              marginBottom: '12px',
+              fontSize: '12px',
+              padding: '4px',
+              border: 'none',
+              backgroundColor: 'rgb(228, 227, 227)',
+              borderRadius: '4px',
+            }}
+            value={inputValue}
+          />
           <>
             {newUserList.map((user) => {
               return <UserBar key={user.userId} username={user.username} statusMessage={user.introMessage} />;
@@ -48,6 +62,8 @@ const ProfilePage = () => {
         </Column>
       ) : (
         <Column>
+          <UserBar key="0" username="장영준" statusMessage="내가 미래다!" />
+          <hr style={{ height: '0.5px', backgroundColor: '#bcbaba', border: 'none' }} />
           <>
             {userList.map((user) => {
               return <UserBar key={user.userId} username={user.username} statusMessage={user.introMessage} />;
