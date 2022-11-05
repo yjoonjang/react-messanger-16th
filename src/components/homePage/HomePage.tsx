@@ -12,7 +12,9 @@ const HomePage = () => {
   const onClickIcon = (event: React.MouseEvent<HTMLButtonElement>) => {
     const pathName = event.currentTarget.name;
     setSelectedContent(pathName);
-    navigate(`/${pathName}`);
+    if (pathName === 'profile') {
+      navigate('/');
+    } else navigate(`/${pathName}`);
   };
 
   return (
