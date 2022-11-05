@@ -17,9 +17,7 @@ const ChattingPage = () => {
   const [content, setContent] = useState<string>('');
   const [imageHeight, setImageHeight] = useState<number>(0);
   const [isButtonActive, setIsButtonActive] = useState<boolean>(false);
-  const [userInfos, setUserInfos] = useRecoilState(userState);
   const [chatList, setChatList] = useRecoilState(chatState);
-  const [image, setImage] = useState<string | ArrayBuffer | null>();
 
   const targetUsername = locationState[0].username;
   const targetUserId = locationState[0].userId;
@@ -99,6 +97,7 @@ const ChattingPage = () => {
       if (typeof fileReader.result === 'string') {
         img.src = fileReader.result;
       }
+      console.log(fileReader.result);
 
       setChatList(() => {
         let tempList = chatList[targetUserId];
