@@ -35,7 +35,7 @@ export default UserBar;
 const Wrapper = styled.button<{ marginTop?: string }>`
   width: 100%;
   height: 70px;
-  padding-left: 20px;
+  padding: 0px 20px 0px 20px;
   display: flex;
   align-items: center;
   margin-top: ${(props) => props.marginTop};

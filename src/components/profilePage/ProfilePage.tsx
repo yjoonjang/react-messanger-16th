@@ -1,4 +1,4 @@
-import { Row, Column, MessangerWrapper } from '../elements/Wrapper.style';
+import { Row, Column } from '../elements/Wrapper.style';
 import UserBar from '../elements/UserBar';
 import { useRecoilValue } from 'recoil';
 import { userState } from '../../state/userState';
